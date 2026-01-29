@@ -6,10 +6,14 @@ if (NOT CMAKE_C_STANDARD)
     set(CMAKE_C_STANDARD 99)
 endif ()
 
-# Default to C++14
+# Default to C++17
 if (NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 14)
+    set(CMAKE_CXX_STANDARD 17)
 endif ()
+
+
+add_compile_options(-std=gnu++17)
+
 
 if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wall -Wextra -Wpedantic)
@@ -24,6 +28,10 @@ add_executable(spin_sol src/spin_sol.cpp src/spin_sol.h)
 add_executable(spin_slow_update src/spin_slow_update.cpp src/spin_slow_update.h)
 ament_target_dependencies(spin_sol rclcpp std_msgs)
 ament_target_dependencies(spin_slow_update rclcpp std_msgs)
+
+target_compile_features(spin_sol PUBLIC cxx_std_17)
+target_compile_features(spin_slow_update PUBLIC cxx_std_17)
+
 
 install(TARGETS
         spin_sol
